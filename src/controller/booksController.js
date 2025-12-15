@@ -7,16 +7,13 @@ const postBook = async (req,res,next) => {
 
         if(!image || !title || !caption || !rating) return res.status(400).json({ message: "All fiels are required" });
 
-        //upload image to cloudinary
-        const uploadResponse = await cloudinary.uploader.upload(image);
-        const imageUrl = uploadResponse.secure_url;
 
         //save the image to db
         const newBook = new Book({
             title, 
             caption, 
             rating, 
-            image: imageUrl,
+            image: image,
             user: req.user._id,
         });
 
